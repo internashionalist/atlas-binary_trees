@@ -18,6 +18,7 @@
 Please use the following data structures and types for binary trees. Don’t forget to include them in your header file.
 
 Basic Binary Tree
+```c
        /**
        * struct binary_tree_s - Binary tree node
        *
@@ -35,15 +36,21 @@ Basic Binary Tree
        };
 
        typedef struct binary_tree_s binary_tree_t;
+```
 
 Binary Search Tree
+```c
        typedef struct binary_tree_s bst_t;
-
+```
 AVL Tree
+```c
        typedef struct binary_tree_s avl_t;
+```
 
 Max Binary Heap
+```c
        typedef struct binary_tree_s heap_t;
+```
 
 Note: For tasks 0 to 23 (included), you have to deal with simple binary trees. They are not BSTs, thus they don’t follow any kind of rule.
 
@@ -257,4 +264,3 @@ Write a function that finds the uncle of a node
        Your function must return a pointer to the uncle node
        If node is NULL, return NULL
        If node has no uncle, return NULL
-       
