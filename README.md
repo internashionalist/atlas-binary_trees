@@ -14,7 +14,8 @@
        Don’t forget to push your header file
        All your header files should be include guarded
 
-# Data structures
+## Data structures
+
 Please use the following data structures and types for binary trees. Don’t forget to include them in your header file.
 
 Basic Binary Tree
@@ -59,7 +60,7 @@ Print function
 
        This function is used only for visualization purposes. You don’t have to push it to your repo. It may not be used during the correction
 
-Tasks
+## Tasks
 0. New node
 
 Write a function that creates a binary tree node
