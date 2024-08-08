@@ -8,4 +8,9 @@
  */
 
 size_t binary_tree_nodes(const binary_tree_t *tree)
-{}
+{
+	size_t nodes = 0; /* initialize node counter */
+
+	if (!tree) /* if no tree */
+		return (0); /* no nodes */
+
