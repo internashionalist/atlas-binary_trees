@@ -12,3 +12,8 @@ void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int))
 {
 	if (!tree || !func) /* if there's no tree or function */
 		return; /* make like a tree */
+
+	binary_tree_postorder(tree->left, func); /* left first */
+	binary_tree_postorder(tree->right, func); /* then right */
+	func(tree->n); /* then root */
+}
