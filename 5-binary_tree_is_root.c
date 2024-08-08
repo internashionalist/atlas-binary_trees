@@ -8,4 +8,10 @@
  */
 
 int binary_tree_is_root(const binary_tree_t *node)
-{}
+{
+	if (!node) /* if there's no node */
+		return (0); /* make like a tree */
+	if (!node->parent) /* if node has no parent */
+		return (1); /* it's Batman! I mean a root! */
+	return (0); /* if node is not a root, return 0 */
+}
