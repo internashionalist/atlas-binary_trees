@@ -8,4 +8,6 @@
  */
 
 binary_tree_t *binary_tree_uncle(binary_tree_t *node)
-{}
+{	/* check if node, parent, or grandparent are NULL */
+	if (!node || !node->parent || !node->parent->parent)
+		return (NULL);
