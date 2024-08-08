@@ -9,8 +9,8 @@
 
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
-       if (!tree) /* if no tree */
-              return (0); /* def not perfect */
+	if (!tree) /* if no tree */
+		return (0); /* def not perfect */
 
-       if (!tree->left && !tree->right) /* if tree is just a root */
-              return (1); /* it's technically perfect */
+	if (!tree->left && !tree->right) /* if tree is just a root */
+		return (1); /* it's technically perfect */
