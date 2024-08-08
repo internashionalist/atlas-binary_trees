@@ -13,3 +13,12 @@ size_t binary_tree_depth(const binary_tree_t *tree)
 
 	if (!tree) /* if no tree */
 		return (0); /* leaf.. get it? */
+
+	while (tree->parent) /* while there are limbs above */
+	{
+		depth++; /* increment depth */
+		tree = tree->parent; /* move up the tree */
+	}
+
+	return (depth); /* return depth of node */
+}
