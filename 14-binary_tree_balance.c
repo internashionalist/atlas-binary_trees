@@ -10,14 +10,16 @@
 
 int binary_tree_balance(const binary_tree_t *tree)
 {
-	int Lheight; /* height of left subtree */
-	int Rheight; /* height of right subtree */
+	int Lheight = 0; /* height of left subtree */
+	int Rheight = 0; /* height of right subtree */
 
 	if (!tree) /* if no tree */
 		return (0); /* no forest? */
 
-	Lheight = binary_tree_height(tree->left); /* measure left subtree */
-	Rheight = binary_tree_height(tree->right); /* measure right subtree */
+	if (tree->left) /* if left exists */
+		Lheight = binary_tree_height(tree->left) + 1; /* measure left subtree */
+	if (tree->right) /* if right exists */
+		Rheight = binary_tree_height(tree->right) + 1; /* measure right subtree */
 
 	return (Lheight - Rheight); /* return balance factor */
 }
