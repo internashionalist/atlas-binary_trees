@@ -9,4 +9,6 @@
  */
 
 void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int))
-{}
+{
+	if (!tree || !func) /* if there's no tree or function */
+		return; /* make like a tree */
