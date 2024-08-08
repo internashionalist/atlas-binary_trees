@@ -12,3 +12,8 @@ void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int))
 {
 	if (!tree || !func) /* if there's no tree or function */
 		return; /* make like a tree */
+
+	binary_tree_inorder(tree->left, func); /* call function on left subtree */
+	func(tree->n); /* call function on root */
+	binary_tree_inorder(tree->right, func); /* do right subtree */
+}
