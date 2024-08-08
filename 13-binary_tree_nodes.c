@@ -15,5 +15,5 @@ size_t binary_tree_nodes(const binary_tree_t *tree)
 		return (0); /* no nodes */
 	parents = 1 + binary_tree_nodes(tree->left) + binary_tree_nodes(tree->right);
 	/* add nodes in both subtrees */
-	return (parents); /* return total number of nodes with children */
+	return (parents); /* return number of nodes with children */
 }
