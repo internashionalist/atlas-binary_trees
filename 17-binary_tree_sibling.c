@@ -9,13 +9,13 @@
 
 binary_tree_t *binary_tree_sibling(binary_tree_t *node)
 {
-       if (!node || !node->parent) /* if no node or no parent */
-              return (NULL); /* no sibling */
+	if (!node || !node->parent) /* if no node or no parent */
+		return (NULL); /* no sibling */
 
-       if (node->parent->left == node) /* if node is left child */
-              return (node->parent->right); /* return right child */
-       if (node->parent->right == node) /* if node is right child */
-              return (node->parent->left); /* return left child */
-       
-       return (NULL); /* otherwise, no sibling */
+	if (node->parent->left == node) /* if node is left child */
+		return (node->parent->right); /* return right child */
+	if (node->parent->right == node) /* if node is right child */
+		return (node->parent->left); /* return left child */
+	
+	return (NULL); /* otherwise, no sibling */
 }
