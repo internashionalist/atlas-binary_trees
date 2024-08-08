@@ -9,17 +9,17 @@
 
 size_t binary_tree_height(const binary_tree_t *tree)
 {
-       size_t Lheight; /* height of left subtree */
-       size_t Rheight; /* height of right subtree */
+	size_t Lheight; /* height of left subtree */
+	size_t Rheight; /* height of right subtree */
 
-       if (!tree || (!tree->left && !tree->right)) /* if no tree or no children */
-              return (0); /* make like a tree */
+	if (!tree || (!tree->left && !tree->right)) /* if no tree or children */
+		return (0); /* make like a tree */
 
-       Lheight = binary_tree_height(tree->left); /* measure left subtree */
-       Rheight = binary_tree_height(tree->right); /* measure right subtree */
+	Lheight = binary_tree_height(tree->left); /* measure left subtree */
+	Rheight = binary_tree_height(tree->right); /* measure right subtree */
 
-       if (Lheight > Rheight) /* if left subtree is taller */
-              return (Lheight + 1); /* return left subtree height plus root */
-       else
-              return (Rheight + 1); /* return subtree height plus root */
+	if (Lheight > Rheight) /* if left subtree is taller */
+		return (Lheight + 1); /* return left subtree height plus root */
+	else
+		return (Rheight + 1); /* return subtree height plus root */
 }
