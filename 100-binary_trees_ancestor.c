@@ -6,7 +6,7 @@
  * @second: pointer to the second node
  *
  * Return: pointer to the LCA node, or NULL if no ancestor
- * 	or if first or second are NULL
+ *	or if first or second are NULL
  */
 
 binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
@@ -17,7 +17,7 @@ binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
 
 	if (first == second) /* if first and second are same node */
 		return ((binary_tree_t *)first); /* return that node */
-	
+
 	while (first) /* traverse ancestors of first node */
 	{
 		const binary_tree_t *temp_node = second; /* set temp node */
