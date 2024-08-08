@@ -11,12 +11,9 @@ int binary_tree_is_full(const binary_tree_t *tree)
 {
 	if (!tree) /* if no tree */
 		return (0); /* def not full */
-
-	if (!binary_tree_is_full(tree->left) || !binary_tree_is_full(tree->right))
-		return (0); /* if either subtree is not full */
-
 	if (!tree->left && !tree->right)
-		return (1); /* if tree IS a leaf */
-
-	return (1); /* tree is full */
+		return (1); /* if tree IS a trunk, it's technically full */
+	if (!binary_tree_is_full(tree->left) || !binary_tree_is_full(tree->right))
+		return (0); /* if either subtree is not full, tree is not full */
+	return (1); /* otherwise... tree is full */
 }
