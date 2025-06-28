@@ -10,17 +10,16 @@
  */
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
-	size_t size, front = 0, rear = 0;	/* front and rear indices for queue */
-	const binary_tree_t **queue;		/* queue for level order traversal */
-	int found_null = 0;					/* flag for null nodes */
+	size_t capacity = 1, front = 0, rear = 0;	/* queue indices & size */
+	const binary_tree_t **queue;				/* queue for traversal */
+	int found_null = 0;							/* flag for null nodes */
 
 	/* NULL tree check */
 	if (!tree)
 		return (0);
 
-	/* allocate enough memory for all nodes using binary_tree_size */
-	size = binary_tree_size(tree);
-	queue = malloc(sizeof(*queue) * size);
+	/* allocate initial queue - it'll grow */
+	queue = malloc(sizeof(*queue) * capacity);
 	if (!queue)
 		return (0);
 
@@ -43,8 +42,19 @@ int binary_tree_is_complete(const binary_tree_t *tree)
 				free(queue);
 				return (0);
 			}
+			if (rear == capacity)
+			{
+				/* double queue size when full */
+				capacity *= 2;
+				queue = realloc(queue, sizeof(*queue) * capacity);
+				if (!queue)
+					return (0);
+			}
+			/* add left child to queue & increment rear index */
 			queue[rear++] = node->left;
 		}
+
+		/* if no left child, fly flag */
 		else
 		{
 			found_null = 1;
@@ -58,8 +68,19 @@ int binary_tree_is_complete(const binary_tree_t *tree)
 				free(queue);
 				return (0);
 			}
+			if (rear == capacity)
+			{
+				/* same here - double queue size when full */
+				capacity *= 2;
+				queue = realloc(queue, sizeof(*queue) * capacity);
+				if (!queue)
+					return (0);
+			}
+			/* add right child to queue & increment rear index */
 			queue[rear++] = node->right;
 		}
+
+		/* if no right child, fly flag */
 		else
 		{
 			found_null = 1;
