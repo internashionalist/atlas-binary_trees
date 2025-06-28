@@ -51,9 +51,9 @@ int binary_tree_traversal(const binary_tree_t *root)
 	if (!queue)
 		return (0);
 
-	queue[rear++] = root;	 					/* enqueue root node */
+	queue[rear++] = root;						/* enqueue root node */
 
-	while (front < rear)	 					/* main traversal loop */
+	while (front < rear)						/* main traversal loop */
 	{
 		const binary_tree_t *node = queue[front++]; /* get current node */
 
@@ -79,7 +79,7 @@ int binary_tree_traversal(const binary_tree_t *root)
 		if (node->right)						/* process right child */
 		{
 			if (found_null)
-			{ 
+			{
 				free(queue);
 				return (0);
 			}
