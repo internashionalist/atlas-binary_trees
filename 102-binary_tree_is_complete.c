@@ -35,6 +35,41 @@ const binary_tree_t **binary_tree_enqueue(
 }
 
 /**
+ * process_child - handle a child during completeness BFS
+ * @child:			child node pointer
+ * @queue:			current queue pointer
+ * @capacity:		pointer to queue capacity
+ * @rear:			pointer to rear index
+ * @found_null:		pointer to NULL found flag
+ * @status:			pointer to success flag (set to 0 on failure)
+ *
+ * Return:			updated queue pointer on success, NULL on failure
+ */
+const binary_tree_t **process_child(const binary_tree_t *child,
+	const binary_tree_t **queue, size_t *capacity, size_t *rear,
+	int *found_null, int *status)
+{
+	if (child)
+	{
+		if (*found_null)
+		{
+			*status = 0;
+			return (queue);
+		}
+		queue = binary_tree_enqueue(queue, capacity, rear, child);
+		if (!queue)
+		{
+			*status = 0;
+			return (NULL);
+		}
+	}
+	else
+		*found_null = 1;
+	*status = 1;
+	return (queue);
+}
+
+/**
  * binary_tree_traversal - breadth‑first traversal to verify completeness
  * @root: pointer to root node
  *
@@ -42,56 +77,42 @@ const binary_tree_t **binary_tree_enqueue(
  */
 int binary_tree_traversal(const binary_tree_t *root)
 {
-	size_t capacity = 1, front = 0, rear = 0;	/* queue indices & size */
-	const binary_tree_t **queue;				/* queue for traversal */
-	int found_null = 0;							/* flag for null children */
+	size_t capacity = 1, front = 0, rear = 0;	/* queue capacity, indices */
+	const binary_tree_t **queue;				/* ptr to queue array */
+	int found_null = 0;							/* flag for NULL node found */
 
-	queue = malloc(sizeof(*queue) * capacity);	/* initial allocation */
+	/* allocate initial queue */
+	queue = malloc(sizeof(*queue) * capacity);
 	if (!queue)
 		return (0);
-
-	queue[rear++] = root;						/* enqueue root node */
-
-	while (front < rear)						/* main traversal loop */
+	/* init queue to root */
+	queue[rear++] = root;
+	/* main traversal loop */
+	while (front < rear)
 	{
-		const binary_tree_t *node = queue[front++]; /* get current node */
+		const binary_tree_t *node;			/* node to process */
+		int ok;								/* status flag for processing */
 
-		if (node->left)							/* process left child */
+		/* get next node */
+		node = queue[front++];
+		/* process left child */
+		queue = process_child(
+			node->left, queue, &capacity, &rear, &found_null, &ok);
+		if (!ok)
 		{
-			if (found_null)
-			{
-				free(queue);
-				return (0);
-			}
-			queue = binary_tree_enqueue(queue, &capacity, &rear, node->left);
-			if (!queue)
-			{
-				free(queue);
-				return (0);
-			}
+			free(queue);
+			return (0);
 		}
-		else
-			found_null = 1;						/* no left child */
-
-		if (node->right)						/* process right child */
+		/* process right child */
+		queue = process_child(
+			node->right, queue, &capacity, &rear, &found_null, &ok);
+		if (!ok)
 		{
-			if (found_null)
-			{
-				free(queue);
-				return (0);
-			}
-			queue = binary_tree_enqueue(queue, &capacity, &rear, node->right);
-			if (!queue)
-			{
-				free(queue);
-				return (0);
-			}
+			free(queue);
+			return (0);
 		}
-		else
-			found_null = 1;						/* no right child */
 	}
-
-	free(queue);								/* no null nodes found */
+	free(queue);
 	return (1);
 }
 
