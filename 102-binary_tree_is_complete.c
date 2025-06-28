@@ -13,25 +13,25 @@ const binary_tree_t **binary_tree_enqueue(
 	const binary_tree_t **queue, size_t *capacity,
 	size_t *rear, const binary_tree_t *node)
 {
-    const binary_tree_t **tmp = queue; /* temp ptr for realloc */
+	const binary_tree_t **tmp = queue; /* temp ptr for realloc */
 
 	/* if queue is full */
-    if (*rear == *capacity)
-    {
+	if (*rear == *capacity)
+	{
 		/* double the capacity */
-        *capacity *= 2;
+		*capacity *= 2;
 
 		/* reallocate memory for the queue */
-        tmp = realloc(tmp, sizeof(*tmp) * (*capacity));
-        if (!tmp)
-            return (NULL);
-    }
+		tmp = realloc(tmp, sizeof(*tmp) * (*capacity));
+		if (!tmp)
+			return (NULL);
+	}
 
 	/* add node to the queue */
-    tmp[(*rear)++] = node;
+	tmp[(*rear)++] = node;
 
 	/* return updated queue */
-    return (tmp);
+	return (tmp);
 }
 
 /**
@@ -42,57 +42,57 @@ const binary_tree_t **binary_tree_enqueue(
  */
 int binary_tree_traversal(const binary_tree_t *root)
 {
-    size_t capacity = 1, front = 0, rear = 0;  /* queue indices & size */
-    const binary_tree_t **queue;               /* queue for traversal  */
-    const binary_tree_t **new_q;               /* tmp pointer for realloc */
-    int found_null = 0;                        /* flag for null nodes  */
+	size_t capacity = 1, front = 0, rear = 0;  /* queue indices & size */
+	const binary_tree_t **queue;               /* queue for traversal  */
+	const binary_tree_t **new_q;               /* tmp pointer for realloc */
+	int found_null = 0;                        /* flag for null nodes  */
 
-    /* allocate initial queue - it'll grow */
-    queue = malloc(sizeof(*queue) * capacity);
-    if (!queue)
-        return (0);
+	/* allocate initial queue - it'll grow */
+	queue = malloc(sizeof(*queue) * capacity);
+	if (!queue)
+		return (0);
 
-    /* init queue with root node */
-    queue[rear++] = root;
+	/* init queue with root node */
+	queue[rear++] = root;
 
-    /* level order traversal */
-    while (front < rear)
-    {
-        const binary_tree_t *node = queue[front++]; /* get current node */
+	/* level order traversal */
+	while (front < rear)
+	{
+		const binary_tree_t *node = queue[front++]; /* get current node */
 
-        /* process left child */
-        if (node->left)
-        {
-            if (found_null)
-            { free(queue); return (0); }
+		/* process left child */
+		if (node->left)
+		{
+			if (found_null)
+			{ free(queue); return (0); }
 
-            /* enqueue left child */
-            new_q = binary_tree_enqueue(queue, &capacity, &rear, node->left);
-            if (!new_q)
-            { free(queue); return (0); }
-            queue = new_q;
-        }
-        else
-            found_null = 1; /* no left child */
+			/* enqueue left child */
+			new_q = binary_tree_enqueue(queue, &capacity, &rear, node->left);
+			if (!new_q)
+			{ free(queue); return (0); }
+			queue = new_q;
+		}
+		else
+			found_null = 1; /* no left child */
 
-        /* process right child */
-        if (node->right)
-        {
-            if (found_null)
-            { free(queue); return (0); }
+		/* process right child */
+		if (node->right)
+		{
+			if (found_null)
+			{ free(queue); return (0); }
 
-            /* enqueue right child */
-            new_q = binary_tree_enqueue(queue, &capacity, &rear, node->right);
-            if (!new_q)
-            { free(queue); return (0); }
-            queue = new_q;
-        }
-        else
-            found_null = 1; /* no right child */
-    }
+			/* enqueue right child */
+			new_q = binary_tree_enqueue(queue, &capacity, &rear, node->right);
+			if (!new_q)
+			{ free(queue); return (0); }
+			queue = new_q;
+		}
+		else
+			found_null = 1; /* no right child */
+	}
 
-    free(queue); /* no null nodes found */
-    return (1);
+	free(queue); /* no null nodes found */
+	return (1);
 }
 
 /**
@@ -104,10 +104,10 @@ int binary_tree_traversal(const binary_tree_t *root)
  */
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
-    /* check for NULL tree */
-    if (!tree)
-        return (0);
+	/* check for NULL tree */
+	if (!tree)
+		return (0);
 
-    /* breadth‑first completeness check */
-    return (binary_tree_traversal(tree));
+	/* breadth‑first completeness check */
+	return (binary_tree_traversal(tree));
 }
