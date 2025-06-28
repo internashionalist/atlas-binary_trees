@@ -66,5 +66,6 @@ const binary_tree_t **process_child(const binary_tree_t *child,
 	const binary_tree_t **queue, size_t *capacity, size_t *rear,
 	int *found_null, int *status);
 binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);
+binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
 
 #endif
