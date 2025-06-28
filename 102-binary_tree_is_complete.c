@@ -43,9 +43,8 @@ const binary_tree_t **binary_tree_enqueue(
 int binary_tree_traversal(const binary_tree_t *root)
 {
 	size_t capacity = 1, front = 0, rear = 0;	/* queue indices & size */
-	const binary_tree_t **queue;				/* queue for traversal  */
-	const binary_tree_t **new_q;				/* tmp pointer for realloc */
-	int found_null = 0;							/* flag for null nodes  */
+	const binary_tree_t **queue;				/* queue for traversal */
+	int found_null = 0;							/* flag for null children */
 
 	queue = malloc(sizeof(*queue) * capacity);	/* initial allocation */
 	if (!queue)
@@ -64,14 +63,12 @@ int binary_tree_traversal(const binary_tree_t *root)
 				free(queue);
 				return (0);
 			}
-			/* enqueue left child */
-			new_q = binary_tree_enqueue(queue, &capacity, &rear, node->left);
-			if (!new_q)
+			queue = binary_tree_enqueue(queue, &capacity, &rear, node->left);
+			if (!queue)
 			{
 				free(queue);
 				return (0);
 			}
-			queue = new_q;						/* update queue pointer */
 		}
 		else
 			found_null = 1;						/* no left child */
@@ -83,14 +80,12 @@ int binary_tree_traversal(const binary_tree_t *root)
 				free(queue);
 				return (0);
 			}
-			/* enqueue right child */
-			new_q = binary_tree_enqueue(queue, &capacity, &rear, node->right);
-			if (!new_q)
+			queue = binary_tree_enqueue(queue, &capacity, &rear, node->right);
+			if (!queue)
 			{
 				free(queue);
 				return (0);
 			}
-			queue = new_q;						/* update queue pointer */
 		}
 		else
 			found_null = 1;						/* no right child */
