@@ -42,56 +42,61 @@ const binary_tree_t **binary_tree_enqueue(
  */
 int binary_tree_traversal(const binary_tree_t *root)
 {
-	size_t capacity = 1, front = 0, rear = 0;  /* queue indices & size */
-	const binary_tree_t **queue;               /* queue for traversal  */
-	const binary_tree_t **new_q;               /* tmp pointer for realloc */
-	int found_null = 0;                        /* flag for null nodes  */
+	size_t capacity = 1, front = 0, rear = 0;	/* queue indices & size */
+	const binary_tree_t **queue;				/* queue for traversal  */
+	const binary_tree_t **new_q;				/* tmp pointer for realloc */
+	int found_null = 0;							/* flag for null nodes  */
 
-	/* allocate initial queue - it'll grow */
-	queue = malloc(sizeof(*queue) * capacity);
+	queue = malloc(sizeof(*queue) * capacity);	/* initial allocation */
 	if (!queue)
 		return (0);
 
-	/* init queue with root node */
-	queue[rear++] = root;
+	queue[rear++] = root;	 					/* enqueue root node */
 
-	/* level order traversal */
-	while (front < rear)
+	while (front < rear)	 					/* main traversal loop */
 	{
 		const binary_tree_t *node = queue[front++]; /* get current node */
 
-		/* process left child */
-		if (node->left)
+		if (node->left)							/* process left child */
 		{
 			if (found_null)
-			{ free(queue); return (0); }
-
+			{
+				free(queue);
+				return (0);
+			}
 			/* enqueue left child */
 			new_q = binary_tree_enqueue(queue, &capacity, &rear, node->left);
 			if (!new_q)
-			{ free(queue); return (0); }
-			queue = new_q;
+			{
+				free(queue);
+				return (0);
+			}
+			queue = new_q;						/* update queue pointer */
 		}
 		else
-			found_null = 1; /* no left child */
+			found_null = 1;						/* no left child */
 
-		/* process right child */
-		if (node->right)
+		if (node->right)						/* process right child */
 		{
 			if (found_null)
-			{ free(queue); return (0); }
-
+			{ 
+				free(queue);
+				return (0);
+			}
 			/* enqueue right child */
 			new_q = binary_tree_enqueue(queue, &capacity, &rear, node->right);
 			if (!new_q)
-			{ free(queue); return (0); }
-			queue = new_q;
+			{
+				free(queue);
+				return (0);
+			}
+			queue = new_q;						/* update queue pointer */
 		}
 		else
-			found_null = 1; /* no right child */
+			found_null = 1;						/* no right child */
 	}
 
-	free(queue); /* no null nodes found */
+	free(queue);								/* no null nodes found */
 	return (1);
 }
 
