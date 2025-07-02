@@ -71,5 +71,7 @@ binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
 int binary_tree_is_bst(const binary_tree_t *tree);
 int bst_check(const binary_tree_t *node, int min, int max);
 bst_t *bst_insert(bst_t **tree, int value);
+avl_t *avl_insert(avl_t **tree, int value);
+void rebalance_up(avl_t **tree, avl_t *node, int value);
 
 #endif
