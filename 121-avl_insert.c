@@ -1,79 +1,81 @@
 #include "binary_trees.h"
 
 /**
- * rebalance_up - rebalance an AVL tree from given node up to root
- * @tree:		address of the AVL root pointer (could change)
+ * rebalance_up - rebalance the AVL tree upwards from given node
+ * @tree:		address of the root pointer (may change)
  * @node:		starting node (parent of inserted node)
- * @value:		value that was inserted to detect LR / RL cases.
+ *
+ * Return:		void
  */
-void rebalance_up(avl_t **tree, avl_t *node, int value)
+void rebalance_up(avl_t **tree, avl_t *node)
 {
-	avl_t *curr = node, *pivot;			/* current node (to check balance) */
+	avl_t *curr = node, *pivot;							/* current node */
 
-	while (curr)									/* traverse up tree */
+	while (curr)										/* go up the tree */
 	{
-		int bf = binary_tree_balance(curr);			/* get balance factor */
+		int bf = binary_tree_balance(curr);				/* balance factor */
 
-		if (bf > 1 && value < curr->left->n)		/* left heavy */
-			pivot = binary_tree_rotate_right(curr);
-		else if (bf < -1 && value > curr->right->n)	/* right heavy */
-			pivot = binary_tree_rotate_left(curr);
-		else if (bf > 1 && value > curr->left->n)	/* left-right case */
+		if (bf > 1)										/* left heavy */
 		{
-			binary_tree_rotate_left(curr->left);
-			pivot = binary_tree_rotate_right(curr);
+			if (binary_tree_balance(curr->left) < 0)	/* left-right case */
+				binary_tree_rotate_left(curr->left);	/* rotate left */
+
+			pivot = binary_tree_rotate_right(curr);		/* or rotate right */
 		}
-		else if (bf < -1 && value < curr->right->n)	/* right-left case */
+		else if (bf < -1)								/* right heavy */
 		{
-			binary_tree_rotate_right(curr->right);	/* rotate right child */
-			pivot = binary_tree_rotate_left(curr);	/* rotate current node */
+			if (binary_tree_balance(curr->right) > 0)	/* right-left case */
+				binary_tree_rotate_right(curr->right);	/* rotate right */
+
+			pivot = binary_tree_rotate_left(curr);		/* or rotate left */
 		}
-		else										/* no rebalancing */
+		else											/* else balanced */
 			pivot = curr;
 
-		if (!pivot->parent)			/* if pivot is root, update tree ptr */
-			*tree = pivot;
+		if (!pivot->parent)								/* if pivot is root */
+			*tree = pivot;								/* update root */
 
-		curr = pivot->parent;						/* move up to parent */
+		curr = pivot->parent;							/* go up to parent */
 	}
 }
 
 /**
  * avl_insert - inserts a value in an AVL tree
- * @tree:		double pointer to root node of the AVL tree
- * @value:		value to insert
+ * @tree:  	double pointer to root node of the AVL tree
+ * @value:	value to insert
  *
- * Return:		pointer to the created node, or NULL on failure/duplicate
+ * Return: 	pointer to created node or NULL on failure/duplicate
  */
 avl_t *avl_insert(avl_t **tree, int value)
 {
-	avl_t *parent = NULL, *curr, *new;			/* pointers for traversal */
+	avl_t *parent = NULL, *curr, *new;					/* current node */
 
-	if (!tree)									/* check for NULL tree ptr */
+	if (!tree)											/* NULL tree check */
 		return (NULL);
-	if (!*tree)									/* if empty, create root */
-		return (*tree = binary_tree_node(NULL, value));
 
-	for (curr = *tree; curr;)			/* traverse to find insertion point */
+	if (!*tree)											/* if empty tree */
+		return (*tree = binary_tree_node(NULL, value));	/* create root */
+
+	for (curr = *tree; curr;)							/* traverse tree */
 	{
-		parent = curr;
-		if (value < curr->n)			/* go left or right based on value */
-			curr = curr->left;
-		else if (value > curr->n)		/* go right if value is greater */
-			curr = curr->right;
-		else							/* duplicate */
+		parent = curr;									/* set parent */
+		if (value < curr->n)							/* if val < curr */
+			curr = curr->left;							/* go left */
+		else if (value > curr->n)						/* if val > curr */
+			curr = curr->right;							/* go right */
+		else											/* if equal */
 			return (NULL);
-
-	new = binary_tree_node(parent, value);	/* create new node with parent */
-	if (!new)
-		return (NULL);
-	if (value < parent->n)		/* insert as L child if value is less */
-		parent->left = new;
-	else						/* insert as R child if value is greater */
-		parent->right = new;
-
-	rebalance_up(tree, parent, value);			/* rebalance tree */
 	}
 
-	return (new);								/* UNDER FORTY LINES */
+	new = binary_tree_node(parent, value);				/* once found place */
+	if (!new)											/* failure */
+		return (NULL);
+	if (value < parent->n)								/* if val < parent */
+		parent->left = new;								/* insert left */
+	else												/* if val > parent */
+		parent->right = new;							/* insert right */
+
+	rebalance_up(tree, parent);							/* then rebalance */
+
+	return (new);										/* fancy new node */
 }
