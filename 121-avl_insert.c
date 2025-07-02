@@ -41,10 +41,10 @@ void rebalance_up(avl_t **tree, avl_t *node)
 
 /**
  * avl_insert - inserts a value in an AVL tree
- * @tree:  	double pointer to root node of the AVL tree
+ * @tree:	double pointer to root node of the AVL tree
  * @value:	value to insert
  *
- * Return: 	pointer to created node or NULL on failure/duplicate
+ * Return:	pointer to created node or NULL on failure/duplicate
  */
 avl_t *avl_insert(avl_t **tree, int value)
 {
