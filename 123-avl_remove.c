@@ -47,6 +47,9 @@ avl_t *rebalance(avl_t *root)
  * @root: root node of the AVL tree
  * @value: value to remove
  *
+ * Description: This function removes a node with the specified value from
+ * an AVL tree.
+ *
  * Return: pointer to the new root node or NULL if tree empty
  */
 avl_t *avl_remove(avl_t *root, int value)
