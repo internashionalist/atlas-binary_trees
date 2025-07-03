@@ -57,8 +57,10 @@ void binary_tree_levelorder(
 	const binary_tree_t *tree, void (*func)(int));
 void binary_tree_levelorder_helper(
 	const binary_tree_t *tree, int level, void (*func)(int));
+
 int binary_tree_is_complete(
 	const binary_tree_t *tree);
+
 const binary_tree_t **binary_tree_enqueue(
 	const binary_tree_t **queue, size_t *capacity, size_t *rear,
 	const binary_tree_t *node);
@@ -66,17 +68,25 @@ int binary_tree_traversal(const binary_tree_t *root);
 const binary_tree_t **process_child(const binary_tree_t *child,
 	const binary_tree_t **queue, size_t *capacity, size_t *rear,
 	int *found_null, int *status);
+
 binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);
+
 binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
+
 int binary_tree_is_bst(const binary_tree_t *tree);
 int bst_check(const binary_tree_t *node, int min, int max);
+
 bst_t *bst_insert(bst_t **tree, int value);
+
 avl_t *avl_insert(avl_t **tree, int value);
 void rebalance_up(avl_t **tree, avl_t *node);
+
 avl_t *array_to_avl(int *array, size_t size);
+
 avl_t *avl_remove(avl_t *root, int value);
 avl_t *min_value_node(avl_t *node);
 avl_t *rebalance(avl_t *root);
+
 avl_t *sorted_array_to_avl(int *array, size_t size);
 avl_t *build_avl(int *arr, int lo, int hi, avl_t *parent);
 
