@@ -9,28 +9,17 @@
  */
 avl_t *array_to_avl(int *array, size_t size)
 {
-	size_t i;											/* loop index */
-	avl_t *root = NULL;									/* init root */
+	size_t i;									/* loop index */
+	avl_t *root = NULL;							/* init root of AVL */
 
-	if (!array || size == 0)							/* NULL/empty check */
+	if (!array || size == 0)					/* NULL/empty array check */
 		return (NULL);
 
-	for (i = 0; i < size; i++)							/* array loop */
+	for (i = 0; i < size; i++)					/* iterate through the array */
 	{
-		if (!root)										/* if NULL root */
-		{
-			root = binary_tree_node(NULL, array[i]);	/* create root node */
-			if (!root)
-				return (NULL);
-		}
-		else											/* if root exists */
-		{
-			avl_t *node;								/* new node pointer */
-
-			node = binary_tree_node(NULL, array[i]);	/* create new node */
-			if (!node)
-				return (NULL);
-		}
+		if (!avl_insert(&root, array[i]) && !root)	/* insert into AVL */
+			return (NULL);
 	}
-	return (root);
+
+	return (root);								/* return root of AVL tree */
 }
