@@ -7,12 +7,12 @@
 #include <limits.h>
 
 /**
- * struct binary_tree_s - Binary tree node
+ * struct binary_tree_s - binary tree node
  *
- * @n: Integer stored in the node
- * @parent: Pointer to the parent node
- * @left: Pointer to the left child node
- * @right: Pointer to the right child node
+ * @n:		integer stored in the node
+ * @parent:	pointer to the parent node
+ * @left:	pointer to the left child node
+ * @right:	pointer to the right child node
  */
 struct binary_tree_s
 {
@@ -77,5 +77,7 @@ avl_t *array_to_avl(int *array, size_t size);
 avl_t *avl_remove(avl_t *root, int value);
 avl_t *min_value_node(avl_t *node);
 avl_t *rebalance(avl_t *root);
+avl_t *sorted_array_to_avl(int *array, size_t size);
+avl_t *build_avl(int *arr, int lo, int hi, avl_t *parent);
 
 #endif
