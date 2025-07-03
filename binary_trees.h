@@ -74,5 +74,8 @@ bst_t *bst_insert(bst_t **tree, int value);
 avl_t *avl_insert(avl_t **tree, int value);
 void rebalance_up(avl_t **tree, avl_t *node);
 avl_t *array_to_avl(int *array, size_t size);
+avl_t *avl_remove(avl_t *root, int value);
+avl_t *min_value_node(avl_t *node);
+avl_t *rebalance(avl_t *root);
 
 #endif
